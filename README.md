@@ -64,3 +64,11 @@ This is not a game. This is not a trend.
 It is a complete discipline engine.  
 **Hard to earn. Easy to lose.**  
 All rights reserved to **Nithin Das**.
+
+## License
+
+This repository is licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)** license.
+
+You may not modify, republish, rename, or use this system or its terminology for commercial purposes. All rights reserved to **Nithin Das**.
+
+[View full license text](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode)
