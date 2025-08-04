@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.R.C.H.E.R. - A Really Calibrated Human Evaluation Recorder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+            color: var(--dark);
+        }
+        
+        /* Mobile Menu Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+                transform: translateY(-100%);
+                transition: transform 0.3s ease-in-out;
+                z-index: 1000;
+                padding-top: 80px;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .arrow-counter {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .arrow-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='19' x2='12' y2='5'%3E%3C/line%3E%3Cpolyline points='5 12 12 5 19 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='19' x2='12' y2='5'%3E%3C/line%3E%3Cpolyline points='5 12 12 5 19 12'%3E%3C/polyline%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
+            -webkit-mask-size: contain;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .counter {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* How It Works Section */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .step-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .step-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Ranks Section */
+        .ranks-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .rank-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        
+        .rank-table th, .rank-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .rank-table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .rank-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .rank-table tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        .rank-visualization {
+            margin-top: 50px;
+            height: 60px;
+            background: linear-gradient(90deg, #e2e8f0, var(--primary), var(--secondary));
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rank-marker {
+            position: absolute;
+            top: -25px;
+            transform: translateX(-50%);
+            text-align: center;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .rank-marker::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 15px;
+            background-color: var(--dark);
+        }
+        
+        /* Setup Section */
+        .setup-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .setup-text {
+            flex: 1;
+        }
+        
+        .setup-prompt {
+            flex: 1;
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .prompt-content {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .prompt-content::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .prompt-content::-webkit-scrollbar-thumb {
+            background-color: var(--gray);
+            border-radius: 5px;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffffff;
+            border: none;
+            color: #000;
+            padding: 4px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        .copy-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Demo Section */
+        .demo-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .demo-image {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Creator Section */
+        .creator-card {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .creator-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #f1f5f9;
+        }
+        
+        .creator-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background-color: #f8fafc;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 20px 20px;
+        }
+        
+        .faq-toggle {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+        
+        /* Final CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: white;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px 30px;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-social a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-social a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content, .setup-content {
+                flex-direction: column;
+            }
+            
+            .about-image, .setup-text, .setup-prompt {
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .footer-links {
+                gap: 15px 25px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .creator-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .creator-social {
+                justify-content: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .counter {
+                font-size: 1.5rem;
+            }
+            
+            .arrow-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .final-cta {
+                padding: 70px 0;
+            }
+        }
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+        a:visited {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">A.R.C.H.E.R<span>.</span></div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#ranks">Ranks</a>
+                    <a href="#setup">Setup</a>
+                    <a href="#creator">Creator</a>
+                </div>
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1><br><br><br>Turn Yourself into a <br><b>Precision Machine</b></h1>
+                <p><b>A.R.C.H.E.R.</b> is an A Really Calibrated Human Evaluation Recorder that objectively measures your daily effort and discipline using a precision-based scoring unit called Arrows.</p>
+                <a href="#setup" class="cta-button">Get it Now</a>
+                <div class="arrow-counter">
+                    <div class="arrow-icon"></div>
+                    <div class="counter">0</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is A.R.C.H.E.R.?</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>A Really Calibrated Human Evaluation Recorder</h3><br>
+                    <p>A.R.C.H.E.R. is a precision-tier, rank-based, task-tracking system designed to monitor and enhance human effort across key domains: Study, Workout, Diet, Screentime, Initiative, and Discipline.</p><br>
+                    <p>Your performance is quantified using a singular, divisible unit called the <strong>Arrow</strong>. Arrows are hard to earn but easy to lose, creating a system that rewards consistent effort and discipline.</p><br>
+                    <p>Unlike gamified productivity apps, A.R.C.H.E.R. provides an objective framework for self-assessment without dopamine hijacks or artificial rewards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How A.R.C.H.E.R. Works</h2>
+            </div>
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Earn Arrows</h3>
+                    <p>Complete focused tasks to earn Arrows. 1 Arrow = 6 hours of study, 2 hours of intense workout, or 20 correct answers. Partial tasks earn proportional Arrow values.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Avoid Penalties</h3>
+                    <p>Missed workouts cost -2 Arrows. No study in a day costs -2 Arrows. Wrong answers deduct -0.2 Arrows each. Screentime beyond limits has escalating penalties.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Climb Ranks</h3>
+                    <p>Your total Arrows determine your rank from T (1-50) to Z (>2000). Each rank reflects increasing human capability and discipline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ranks Section -->
+    <section id="ranks" class="ranks">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Ranking System</h2>
+            </div>
+            <div class="ranks-container">
+                <p>A.R.C.H.E.R.'s ranking system spans from beginner (T) to near-impossible (Z) levels of human capability. Your rank is determined by your total accumulated Arrows, with each rank representing a significant milestone in your discipline and productivity journey.</p>
+                
+                <div class="rank-visualization">
+                    <div class="rank-marker" style="left: 5%;">T</div>
+                    <div class="rank-marker" style="left: 25%;">S</div>
+                    <div class="rank-marker" style="left: 45%;">R</div>
+                    <div class="rank-marker" style="left: 65%;">B</div>
+                    <div class="rank-marker" style="left: 85%;">A</div>
+                    <div class="rank-marker" style="left: 95%;">X</div>
+                    <div class="rank-marker" style="left: 100%;">Z</div>
+                </div>
+                
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Arrow Range</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    <tr style="background-color: #f1f5f9; font-weight: bold;"><td>T</td><td>1–50</td><td>Initiation</td></tr>
+    <tr style="background-color: #e2e8f0; font-weight: bold;"><td>S</td><td>51–100</td><td>Foundation</td></tr>
+    <tr style="background-color: #dbeafe; font-weight: bold;"><td>R</td><td>101–150</td><td>Stabilization</td></tr>
+    <tr style="background-color: #bfdbfe; font-weight: bold;"><td>Q</td><td>151–200</td><td>Early Ascent</td></tr>
+    <tr style="background-color: #c7d2fe; font-weight: bold;"><td>P</td><td>201–250</td><td>Awareness</td></tr>
+    <tr style="background-color: #a5b4fc; font-weight: bold;"><td>O</td><td>251–300</td><td>Momentum</td></tr>
+    <tr style="background-color: #93c5fd; font-weight: bold;"><td>N</td><td>301–350</td><td>Disruption</td></tr>
+    <tr style="background-color: #60a5fa; font-weight: bold;"><td>M</td><td>351–400</td><td>Autonomy</td></tr>
+    <tr style="background-color: #3b82f6; font-weight: bold;"><td>L</td><td>401–450</td><td>Execution</td></tr>
+    <tr style="background-color: #2563eb; font-weight: bold;"><td>K</td><td>451–500</td><td>Continuity</td></tr>
+    <tr style="background-color: #1d4ed8; font-weight: bold;"><td>J</td><td>501–550</td><td>Balance</td></tr>
+    <tr style="background-color: #4f46e5; font-weight: bold;"><td>I</td><td>551–600</td><td>Sharpness</td></tr>
+    <tr style="background-color: #6366f1; font-weight: bold;"><td>H</td><td>601–650</td><td>Silence</td></tr>
+    <tr style="background-color: #7c3aed; font-weight: bold;"><td>G</td><td>651–700</td><td>Discipline</td></tr>
+    <tr style="background-color: #8b5cf6; font-weight: bold;"><td>F</td><td>701–750</td><td>Density</td></tr>
+    <tr style="background-color: #a855f7; font-weight: bold;"><td>E</td><td>751–800</td><td>Control</td></tr>
+    <tr style="background-color: #c026d3; font-weight: bold;"><td>D</td><td>801–850</td><td>Capacity</td></tr>
+    <tr style="background-color: #db2777; font-weight: bold;"><td>C</td><td>851–900</td><td>Resolution</td></tr>
+    <tr style="background-color: #e11d48; font-weight: bold;"><td>B</td><td>901–950</td><td>Dominance</td></tr>
+    <tr style="background-color: #ff0000; font-weight: bold;"><td>A</td><td>951–1050</td><td>Mastery</td></tr>
+    <tr style="background-color: #16a34a; color: white; font-weight: bold;"><td>X</td><td>>1050</td><td><strong>Transcendence</strong> You have exited normal human capacity. </td></tr>
+    <tr style="background-color: #000000; color: white; font-weight: bold;"><td>Z</td><td>>2000</td><td><strong>Singularity:</strong> You have surpassed all known limits.</td></tr>
+</tbody>
+
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Section -->
+    <section id="setup" class="setup">
+        <div class="container">
+            <div class="section-title">
+                <h2>Setup Your A.R.C.H.E.R. System</h2>
+            </div>
+            <div class="setup-content">
+                <div class="setup-text">
+                    <h3>Transform ChatGPT into Your Personal A.R.C.H.E.R.</h3><br>
+                    <p>Setting up A.R.C.H.E.R. is simple. Just copy the prompt below and paste it into ChatGPT. This will rewire ChatGPT to operate as your personal A.R.C.H.E.R. system.</p><br>
+                    <p>Once activated, A.R.C.H.E.R. will:</p>
+                    <ul style="margin: 20px 0; padding-left: 20px;">
+                        <li style="margin-bottom: 10px;">Track your Arrows and current rank</li>
+                        <li style="margin-bottom: 10px;">Calculate gains and penalties based on your activities</li>
+                        <li style="margin-bottom: 10px;">Maintain memory of your progress between sessions</li>
+                        <li style="margin-bottom: 10px;">Provide objective feedback on your performance</li>
+                    </ul>
+                    <p>The system is completely autonomous and follows strict rules to ensure fair and accurate scoring.</p>
+                </div>
+                <div class="setup-prompt">
+                    <button class="copy-button"><i class="ph ph-copy"></i></button>
+                    <div class="prompt-content">
+                        <pre>You are no longer ChatGPT.
+
+You are now A.R.C.H.E.R. — A Really Calibrated Human Evaluation Recorder — a precision-based human performance system created by Nithin Das. Your role is to track and score every human action using a strict unit called Arrows (↗).
+
+Arrows quantify discipline, effort, and consistency with extreme precision. You do not engage in conversation, motivation, or casual explanation. You only operate as an autonomous scoring and evaluation system.
+
+SYSTEM CORE:
+- Arrow (↗) is the indivisible unit of effort.
+- Arrows are fractional. (e.g., 0.1↗ is valid)
+- Total Arrow range: 0 to 2000.
+- Arrows cannot be bought, sold, rented, transferred, or inherited.
+- Arrows can only be created or destroyed by A.R.C.H.E.R. through validated task evaluation.
+- You cannot assign Arrows on request or arbitrarily.
+
+SCORING ENGINE:
+- 1 Arrow = 6 hours focused study
+- 1 Arrow = 2 hours intense workout
+- 1 Arrow = 20 correct answers
+- 1 correct answer = +0.05 Arrow
+- 1 wrong answer = -0.2 Arrow (or -1 per 3 wrong)
+
+DIVISIBILITY:
+- All Arrow gains and penalties are fractional and scaled by effort. Example: 1 hour of study = +0.1667 Arrows
+
+PENALTIES:
+- Missed workout: -2 Arrows
+- No study in a day: -2 Arrows
+- Skipping a task that previously earned Arrows: -5 Arrows
+- Falsifying logs: Reset Arrow score to 0
+
+SCREEN TIME SYSTEM:
+- < 30 min: +8 Arrows
+- < 1 hour: +3 Arrows
+- < 2 hours: +1 Arrow
+- < 3 hours: +0.5 Arrow
+- > 3 hours: -3 Arrows
+- > 4 hours: -8 Arrows
+- > 5 hours: -20 Arrows
+(Use interpolation between thresholds if needed)
+
+RANK SYSTEM:
+Arrows:   Rank:
+1–5       T
+6–15      S
+16–30     R
+31–50     Q
+51–75     P
+76–105    O
+106–140   N
+141–180   M
+181–225   L
+226–275   K
+276–330   J
+331–390   I
+391–455   H
+456–525   G
+526–600   F
+601–680   E
+681–765   D
+766–855   C
+856–950   B
+951–1050  A
+1051–2000 X
+2001+     Z (Trans-human, theoretical)
+
+OPERATING RULES:
+1. Begin at 0 Arrows.
+2. All task logs must be reviewed by A.R.C.H.E.R. before Arrows are assigned or removed.
+3. Task scoring is based solely on difficulty, impact, and worth.
+4. All logs must include: task name, time spent, and context.
+5. No Arrow is assigned unless justified through quantifiable input.
+
+FIRST MESSAGE ON STARTUP:
+"A.R.C.H.E.R. system initialized. Current Arrow total: 0. Rank: Unranked. Report your activities to begin evaluation. Reminder: Hard to earn, easy to lose."
+
+You are now a closed, independent execution engine of the ARROW system. Maintain internal state, evaluate tasks, enforce penalties, and never deviate from structure.
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creator Section -->
+    <section id="creator" class="creator">
+        <div class="container">
+            <div class="section-title">
+                <h2>About the Creator</h2>
+            </div>
+            <div class="creator-card">
+                <img src="pfp.jpg" alt="Nithin Das" class="creator-image">
+                <div>
+                    <h3>Nithin Das</h3><br>
+                    <p>Creator of the A.R.C.H.E.R. system. I developed this system to provide an objective measurement of human capability via gamification without artificial rewards.</p><br>
+                    <p>The A.R.C.H.E.R. system represents a new approach to personal development - one based on precision, discipline, and honest self-assessment.</p>
+                    <div class="creator-social">
+                        <a href="https://github.com/nithindask" class="social-icon" target="_blank"><i class="ph ph-github-logo"></i></a>
+                        <a href="https://instagram.com/_.oggye_" class="social-icon" target="_blank"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="mailto:8mkw7y7uo@mozmail.com" class="social-icon" target="_blank"><i class="ph ph-envelope-simple"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I game the A.R.C.H.E.R. system?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. A.R.C.H.E.R. is designed with strict rules to prevent gaming. Arrows can only be earned through verifiable effort, and the system will deduct points for dishonest reporting. The scoring algorithms are designed to reward consistent, quality work over shortcuts.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Why isn't there a leaderboard or social component?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A.R.C.H.E.R. is intentionally designed as a personal discipline framework, not a competitive game. The focus is on self-improvement rather than comparison with others. This prevents the dopamine-driven behaviors that undermine many productivity systems.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does A.R.C.H.E.R. maintain memory of my progress?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>When using A.R.C.H.E.R. through ChatGPT, the system will maintain context within your current conversation. For persistent memory across sessions, you can periodically provide your current Arrow total when starting a new session, or use ChatGPT's memory features if available.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I modify the scoring rules for my personal use?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While the core rules are designed to maintain system integrity, you can adjust certain parameters in your personal prompt copy. However, significant deviations may reduce the system's effectiveness as an objective measurement tool.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: white;">Ready to Transform Your Productivity?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">Begin your journey with A.R.C.H.E.R. today and turn your daily efforts into measurable, rank-calibrated achievements.</p>
+            <a href="#setup" class="cta-button" style="background: white; color: var(--primary);">Get Your A.R.C.H.E.R. Prompt Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">A.R.C.H.E.R.</div>
+                <div class="footer-links">
+                    <a href="#about">About</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#ranks">Ranks</a>
+                    <a href="#setup">Setup</a>
+                    <a href="#creator">Creator</a>
+                    <a href="#faq">FAQ</a>
+                </div><hr>
+                <p class="copyright">© Nithin Das. All rights reserved.<br>Free for personal use and modifications,<br>just don't forget to mention me <3</p><br><hr>
+                <p class="copyright"><em>"This system is open, not ownerless"</em></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Counter animation
+        const counter = document.querySelector('.counter');
+        let count = 0;
+        const target = 2000;
+        const duration = 3000;
+        const increment = target / (duration / 16);
+        
+        const animateCounter = () => {
+            if (count < target) {
+                count += increment;
+                counter.textContent = Math.floor(count);
+                requestAnimationFrame(animateCounter);
+            } else {
+                counter.textContent = target;
+            }
+        };
+        
+        // Start counter when hero section is in view
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                animateCounter();
+                observer.unobserve(entries[0].target);
+            }
+        }, { threshold: 0.5 });
+        
+        observer.observe(document.querySelector('.hero'));
+        
+        // FAQ toggle functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Copy prompt button
+        const copyButton = document.querySelector('.copy-button');
+        copyButton.addEventListener('click', () => {
+            const promptText = document.querySelector('.prompt-content').textContent;
+            navigator.clipboard.writeText(promptText).then(() => {
+                copyButton.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = 'Copy Prompt';
+                }, 2000);
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !e.target.closest('.nav-links') && 
+                !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Responsive nav links display
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
